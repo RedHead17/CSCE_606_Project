@@ -179,7 +179,7 @@ scene("game", ({ level, score }) => {
   //Let us make the space_invader moving
   onUpdate("space_invader", (s) => {
     s.move(CURRENT_SPEED, 0);
-    if (s.pos.x - player.pos.x <= 0.1)
+    if (abs(s.pos.x - player.pos.x) <= 0.1)
       wait(0.5, () => {
         spawnEnemyBullet(s.pos.add(0, 25));
       });
