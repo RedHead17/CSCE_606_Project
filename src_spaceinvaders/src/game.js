@@ -3,11 +3,11 @@ import { playableMap } from "./PlayableMap";
 //Created a new clone //
 const MOVE_SPEED = 200;
 
-const INVADER_SPEED = 200;
+const INVADER_SPEED = 100;
 let CURRENT_SPEED = INVADER_SPEED;
-const LEVEL_DOWN = 30;
+const LEVEL_DOWN = 2;
 const BULLET_SPEED = 400;
-const TIME_LEFT = 30;
+const TIME_LEFT = 30000;
 const k = kaboom({
   global: true,
   // enable full screen
@@ -130,10 +130,24 @@ scene("game", ({ level, score }) => {
       pos(p),
       origin("center"),
       color(0.5, 0.5, 1),
+
       "bullet",
       area(),
     ]);
   }
+
+  function spawnEnemyBullet(p) {
+    add([
+      rect(2, 10),
+      pos(p),
+      origin("center"),
+      color(200, 50, 30),
+
+      "enemyBullet",
+      area(),
+    ]);
+  }
+
   keyPress("b", () => {
     spawnBullet(player.pos.add(0, -25));
   });
@@ -145,6 +159,11 @@ scene("game", ({ level, score }) => {
     }
   });
 
+  onUpdate("enemyBullet", (e) => {
+    e.move(0, BULLET_SPEED);
+    if (e.pos.y > player.pos.y) destroy(e);
+  });
+
   collides("bullet", "space_invader", (b, s) => {
     shake(4);
     destroy(b);
@@ -154,11 +173,29 @@ scene("game", ({ level, score }) => {
     // then display the score
     scoreLabel.text = scoreLabel.value;
   });
+  function abs(x) {
+    return x < 0 ? -x : x;
+  }
   //Let us make the space_invader moving
   onUpdate("space_invader", (s) => {
     s.move(CURRENT_SPEED, 0);
+    if (s.pos.x - player.pos.x <= 0.1)
+      wait(0.5, () => {
+        spawnEnemyBullet(s.pos.add(0, 25));
+      });
   });
 
+  onCollide("space_invader", "enemyBullet", (s, e) => {
+    destroy(e);
+  });
+
+  onCollide("enemyBullet", "enemyBullet", (e, f) => {
+    destroy(f);
+  });
+
+  player.onCollide("enemyBullet", () => {
+    go("lose", { score: scoreLabel.value });
+  });
   //On Collision with right wall
   // Space-invader has to turn around and move down on each collision
   collides("space_invader", "right_wall", () => {
