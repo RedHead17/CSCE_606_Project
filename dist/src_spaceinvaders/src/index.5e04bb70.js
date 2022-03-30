@@ -523,6 +523,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _kaboom = require("../../node_modules/kaboom");
 var _kaboomDefault = parcelHelpers.interopDefault(_kaboom);
 var _playableMap = require("./PlayableMap");
+var _info = require("./info");
 //Created a new clone //
 const MOVE_SPEED = 200;
 const INVADER_SPEED = 100;
@@ -536,13 +537,74 @@ const k = _kaboomDefault.default({
     fullscreen: true,
     scale: 1,
     background: [
-        0.1,
         0,
         0,
-        0
+        1
+    ],
+    clearColor: [
+        51,
+        151,
+        255
     ],
     // for debug mode
     debug: true
+});
+// Menu Scene
+scene("menu", ()=>{
+    var x = 10, y = 10, z = 155;
+    color(240, 100, 24);
+    add([
+        text("Space Invaders "),
+        pos(window.innerWidth / 2 - 300, window.innerHeight / 2 - 200),
+        ,
+        scale(1),
+        color(40, 210, 255),
+        area(),
+        "title", 
+    ], origin("center"));
+    // Play game button
+    add([
+        //rect(260, 20),
+        text("Play game"),
+        pos(window.innerWidth / 2 - 20, window.innerHeight / 2 - 40),
+        color(10, 10, 155),
+        origin("center"),
+        "button",
+        {
+            clickAction: ()=>{
+                go("vaccineInfoScene", {
+                    level: 0,
+                    score: 0
+                });
+            //go("game", { level: 0, score: 0 });
+            }
+        },
+        scale(0.7),
+        area(),
+        , 
+    ]);
+    add([
+        //rect(260, 20),
+        text("Back to Main Menu"),
+        color(10, 10, 155),
+        pos(window.innerWidth / 2 - 20, window.innerHeight / 2),
+        "button",
+        {
+            clickAction: ()=>window.open("C:UserskaushDesktopCSCE_606_Projectindex.html")
+        },
+        scale(0.7),
+        area(),
+        origin("center"), 
+    ]);
+    action("button", (b1)=>{
+        onHover("button", (b)=>{
+            b.use(color(240, 100, 155));
+        });
+        b1.use(color(10, 10, 155));
+    });
+    onClick("button", (b)=>{
+        b.clickAction();
+    });
 });
 window.addEventListener("resize", resize, false);
 function resize() {
@@ -671,7 +733,7 @@ scene("game", ({ level , score  })=>{
             rect(2, 10),
             pos(p),
             origin("center"),
-            color(0.5, 0.5, 1),
+            color(255, 0.5, 1),
             "bullet",
             area(), 
         ]);
@@ -758,23 +820,56 @@ scene("lose", ({ score  })=>{
         pos(width() / 2, height() / 2)
     ]);
     add([
-        text('Hit "Space bar" to Play again'),
+        text("Game Over. Going Back to Main Menu in 2 seconds"),
+        color(200, 50, 10),
         scale(0.5),
-        pos(width() / 2 - 240, height() / 2 + 30), 
+        pos(window.innerWidth / 3 - 300, window.innerHeight / 2 + 30), 
     ]);
-    onKeyPress("space", ()=>{
+    // start the game
+    // onKeyPress("space", () => {
+    //   go("game", { level: 0, score: 0 });
+    // });
+    wait(2, ()=>{
+        go("menu");
+    });
+});
+scene("vaccineInfoScene", ({ level , score  })=>{
+    layers([
+        "ui",
+        "bg"
+    ], "bg");
+    const infoColor = add([
+        rect(window.innerWidth, window.innerHeight),
+        color(10, 0, 10),
+        layer("bg", "ui"),
+        fixed(), 
+    ]);
+    add([
+        text(_info.info[level], {
+            size: 35,
+            width: window.innerWidth,
+            font: "apl386o"
+        }),
+        scale(1),
+        color(200, 144, 255),
+        pos(20, 70), 
+    ]), add([
+        text("Loading next Level..Please Wait..."),
+        scale(0.5),
+        color(200, 3, 10),
+        pos(100, window.innerHeight - 100), 
+    ]);
+    wait(3, ()=>{
         go("game", {
-            level: 0,
-            score: 0
+            level: level,
+            score: score
         });
     });
 });
-go("game", {
-    level: 0,
-    score: 0
-});
+//init();
+go("menu");
 
-},{"../../node_modules/kaboom":"larQu","./PlayableMap":"gHyFW","@parcel/transformer-js/src/esmodule-helpers.js":"c1kAu"}],"larQu":[function(require,module,exports) {
+},{"../../node_modules/kaboom":"larQu","./PlayableMap":"gHyFW","@parcel/transformer-js/src/esmodule-helpers.js":"c1kAu","./info":"8EidD"}],"larQu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>no
@@ -4836,6 +4931,47 @@ const playableMap = [
         "!                          &",
         "!                          &",
         "!                          &", 
+    ], 
+];
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"c1kAu"}],"8EidD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "info", ()=>info
+);
+const info = [
+    [
+        "Get Vaccinated.. Encourage Others"
+    ],
+    [
+        "Kill that hestitation regarding vaccines or that hesitation will kill you"
+    ],
+    [
+        "Don't succumb to viruses.. Make viruses succumb when they attack you. Happens only when you are fully immune. Believe in what great researchers are saying", 
+    ],
+    [
+        "Live, attenuated vaccines fight viruses and bacteria. These vaccines contain a version of the living virus or bacteria that has been weakened so that it does not cause serious disease in people with healthy immune systems. Because live, attenuated vaccines are the closest thing to a natural infection, they are good teachers for the immune system. Examples of live, attenuated vaccines include measles, mumps, and rubella vaccine (MMR) and varicella (chickenpox) vaccine. Even though they are very effective, not everyone can receive these vaccines. Children with weakened immune systems—for example, those who are undergoing chemotherapy—cannot get live vaccines.", 
+    ],
+    [
+        "It is always better to prevent a disease than to treat it after it occurs.", 
+    ],
+    [
+        "Vaccination is a highly effective, safe and easy way to help keep your family healthy.", 
+    ],
+    [
+        "Your child is exposed to thousands of germs every day in his environment. This happens through the food he eats, air he breathes, and things he puts in his mouth.", 
+    ],
+    [
+        "Babies are born with immune systems that can fight most germs, but there are some deadly diseases they can’t handle. That’s why they need vaccines to strengthen their immune system.", 
+    ],
+    [
+        "Vaccines use very small amounts of antigens to help your child’s immune system recognize and learn to fight serious diseases. Antigens are parts of germs that cause the body’s immune system to go to work.", 
+    ],
+    [
+        "Thirty years ago, vaccines used 3,000 antigens to protect against 8 diseases by age two. Today, vaccines use 305 antigens to protect against 14 diseases by age two.", 
+    ],
+    [
+        "For some vaccines (primarily inactivated vaccines), the first dose does not provide as much immunity as possible. So, more than one dose is needed to build more complete immunity. The vaccine that protects against the bacteria Hib, which causes meningitis, is a good example.", 
     ], 
 ];
 
