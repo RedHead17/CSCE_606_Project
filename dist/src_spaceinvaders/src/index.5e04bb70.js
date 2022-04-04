@@ -626,6 +626,24 @@ loadRoot("https://i.imgur.com/");
 loadSprite("space_invader", "m2A06Eg.png"); // https://imgur.com/m2A06Eg
 loadSprite("wall", "gqVoI2b.png");
 loadSprite("space_ship", "Wb1qfhK.png");
+// loadRoot("sprites/");
+// loadSprite("space", "space.jpg");
+// loadSprite("rocket1", "rocket1.png");
+// loadSprite("rocket2", "rocket2.png");
+// loadSprite("rocket3", "rocket3.png");
+// loadSprite("rocket4", "rocket4.png");
+// loadSprite("ship", "ship.png");
+// loadSprite("bullet", "bullet.png");
+// loadSprite("asteroid", "asteroid.png");
+// loadSprite("asteroid_small1", "asteroid_small1.png");
+// loadSprite("asteroid_small2", "asteroid_small2.png");
+// loadSprite("asteroid_small3", "asteroid_small3.png");
+// loadSprite("asteroid_small4", "asteroid_small4.png");
+// loadRoot("sounds/");
+// loadSound("rocket_thrust", "rocket_thrust.wav");
+// loadSound("laser", "laser.wav");
+// loadSound("explosion", "explosion.mp3");
+// loadSound("Steamtech-Mayhem_Looping", "Steamtech-Mayhem_Looping.mp3");
 scene("game", ({ level , score  })=>{
     //create layers
     //An array
@@ -645,7 +663,7 @@ scene("game", ({ level , score  })=>{
         // load in some sprites
         "^": ()=>[
                 sprite("space_invader"),
-                scale(0.7),
+                scale(0.8),
                 "space_invader",
                 area()
             ]
@@ -653,13 +671,15 @@ scene("game", ({ level , score  })=>{
         "!": ()=>[
                 sprite("wall"),
                 "left_wall",
-                area()
+                area(),
+                solid()
             ]
         ,
         "&": ()=>[
                 sprite("wall"),
                 "right_wall",
-                area()
+                area(),
+                solid()
             ]
     };
     const gameLevel = addLevel(_playableMap.playableMap[level], levelCfg);
@@ -773,7 +793,7 @@ scene("game", ({ level , score  })=>{
     //Let us make the space_invader moving
     onUpdate("space_invader", (s)=>{
         s.move(CURRENT_SPEED, 0);
-        if (abs(s.pos.x - player.pos.x) <= 0.1) wait(0.5, ()=>{
+        if (abs(s.pos.x - player.pos.x) <= 0.1) wait(0.2, ()=>{
             spawnEnemyBullet(s.pos.add(0, 25));
         });
     });
@@ -826,9 +846,6 @@ scene("lose", ({ score  })=>{
         pos(window.innerWidth / 3 - 300, window.innerHeight / 2 + 30), 
     ]);
     // start the game
-    // onKeyPress("space", () => {
-    //   go("game", { level: 0, score: 0 });
-    // });
     wait(2, ()=>{
         go("menu");
     });
@@ -869,7 +886,7 @@ scene("vaccineInfoScene", ({ level , score  })=>{
 //init();
 go("menu");
 
-},{"../../node_modules/kaboom":"larQu","./PlayableMap":"gHyFW","@parcel/transformer-js/src/esmodule-helpers.js":"c1kAu","./info":"8EidD"}],"larQu":[function(require,module,exports) {
+},{"../../node_modules/kaboom":"larQu","./PlayableMap":"gHyFW","./info":"8EidD","@parcel/transformer-js/src/esmodule-helpers.js":"c1kAu"}],"larQu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>no
@@ -4899,18 +4916,18 @@ parcelHelpers.export(exports, "playableMap", ()=>playableMap
 );
 const playableMap = [
     // [
-    //   "!   ^     &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
-    //   "!       ^ &",
-    //   "!         &",
-    //   "!         &",
-    //   "!         &",
+    //   "!   ^                    &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!       ^                &",
+    //   "!                        &",
+    //   "!                        &",
+    //   "!                        &",
     // ],
     [
         "!^^^           ^^^   ^^   ^&",

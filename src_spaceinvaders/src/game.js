@@ -113,6 +113,26 @@ loadSprite("space_invader", "m2A06Eg.png"); // https://imgur.com/m2A06Eg
 loadSprite("wall", "gqVoI2b.png");
 loadSprite("space_ship", "Wb1qfhK.png");
 
+// loadRoot("sprites/");
+// loadSprite("space", "space.jpg");
+// loadSprite("rocket1", "rocket1.png");
+// loadSprite("rocket2", "rocket2.png");
+// loadSprite("rocket3", "rocket3.png");
+// loadSprite("rocket4", "rocket4.png");
+// loadSprite("ship", "ship.png");
+// loadSprite("bullet", "bullet.png");
+// loadSprite("asteroid", "asteroid.png");
+// loadSprite("asteroid_small1", "asteroid_small1.png");
+// loadSprite("asteroid_small2", "asteroid_small2.png");
+// loadSprite("asteroid_small3", "asteroid_small3.png");
+// loadSprite("asteroid_small4", "asteroid_small4.png");
+
+// loadRoot("sounds/");
+// loadSound("rocket_thrust", "rocket_thrust.wav");
+// loadSound("laser", "laser.wav");
+// loadSound("explosion", "explosion.mp3");
+// loadSound("Steamtech-Mayhem_Looping", "Steamtech-Mayhem_Looping.mp3");
+
 scene("game", ({ level, score }) => {
   //create layers
   //An array
@@ -128,9 +148,9 @@ scene("game", ({ level, score }) => {
     // parameters 1: name of the sprite, 2: solid , 3: tag
 
     // load in some sprites
-    "^": () => [sprite("space_invader"), scale(0.7), "space_invader", area()],
-    "!": () => [sprite("wall"), "left_wall", area()],
-    "&": () => [sprite("wall"), "right_wall", area()],
+    "^": () => [sprite("space_invader"), scale(0.8), "space_invader", area()],
+    "!": () => [sprite("wall"), "left_wall", area(), solid()],
+    "&": () => [sprite("wall"), "right_wall", area(), solid()],
   };
 
   const gameLevel = addLevel(playableMap[level], levelCfg);
@@ -251,7 +271,7 @@ scene("game", ({ level, score }) => {
   onUpdate("space_invader", (s) => {
     s.move(CURRENT_SPEED, 0);
     if (abs(s.pos.x - player.pos.x) <= 0.1)
-      wait(0.5, () => {
+      wait(0.2, () => {
         spawnEnemyBullet(s.pos.add(0, 25));
       });
   });
@@ -305,10 +325,6 @@ scene("lose", ({ score }) => {
   ]);
 
   // start the game
-
-  // onKeyPress("space", () => {
-  //   go("game", { level: 0, score: 0 });
-  // });
 
   wait(2, () => {
     go("menu");
