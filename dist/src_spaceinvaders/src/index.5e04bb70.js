@@ -590,7 +590,7 @@ scene("menu", ()=>{
         pos(window.innerWidth / 2 - 20, window.innerHeight / 2),
         "button",
         {
-            clickAction: ()=>window.open("C:UserskaushDesktopCSCE_606_Projectindex.html")
+            clickAction: ()=>window.location = "../../index.html"
         },
         scale(0.7),
         area(),

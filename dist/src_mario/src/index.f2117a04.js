@@ -597,7 +597,7 @@ scene("menu", ()=>{
         pos(window.innerWidth / 2 - 20, window.innerHeight / 2),
         "button",
         {
-            clickAction: ()=>window.open("C:UserskaushDesktopCSCE_606_Projectindex.html")
+            clickAction: ()=>window.location = "../../index.html"
         },
         scale(0.7),
         area(),
@@ -641,6 +641,9 @@ loadSprite("brick", "pogC9x5.png");
 //blocks
 loadSprite("block", "M6rwarW.png");
 //mario
+// Old mario: "Wb1qfhK.png"
+// Newly replaced sprite
+// https://i.imgur.com/dMbsCBb.png
 loadSprite("mario", "Wb1qfhK.png");
 loadSprite("mushroom", "0wMd92p.png");
 //BiggerMarioShor
@@ -821,7 +824,7 @@ scene("game", ({ level , score  })=>{
                 scale(0.5),
                 // body(),
                 area(),
-                "dangerous"
+                "dangerous", 
             ]
         ,
         "@": ()=>[
@@ -1116,7 +1119,7 @@ scene("game", ({ level , score  })=>{
             text("Right - D or Right Arrow Key"),
             pos(20, 86),
             scale(0.3),
-            fixed()
+            fixed(), 
         ]);
         add([
             text("Jump - Space"),
@@ -1134,7 +1137,7 @@ scene("game", ({ level , score  })=>{
             text("Use Pipe - S or Down Arrow"),
             pos(20, 134),
             scale(0.3),
-            fixed()
+            fixed(), 
         ]);
     };
     onKeyPress("c", controlsInfo);

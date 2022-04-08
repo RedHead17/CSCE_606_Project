@@ -79,8 +79,7 @@ scene("menu", () => {
     pos(window.innerWidth / 2 - 20, window.innerHeight / 2),
     "button",
     {
-      clickAction: () =>
-        window.open("C:UserskaushDesktopCSCE_606_Projectindex.html"),
+      clickAction: () => (window.location = "../../index.html"),
     },
     scale(0.7),
     area(),
@@ -131,7 +130,9 @@ loadSprite("brick", "pogC9x5.png");
 loadSprite("block", "M6rwarW.png");
 
 //mario
-
+// Old mario: "Wb1qfhK.png"
+// Newly replaced sprite
+// https://i.imgur.com/dMbsCBb.png
 loadSprite("mario", "Wb1qfhK.png");
 
 loadSprite("mushroom", "0wMd92p.png");
@@ -261,7 +262,7 @@ scene("game", ({ level, score }) => {
       scale(0.5),
       // body(),
       area(),
-      "dangerous"
+      "dangerous",
     ],
     "@": () => [
       sprite("blue-surprise"),
@@ -435,28 +436,28 @@ scene("game", ({ level, score }) => {
 
   // Let us make evils move
   onUpdate("dangerous", (d) => {
-	let x_dist = d.pos.x - player.pos.x;
-	let y_dist = d.pos.y - (player.pos.y - 20);
-	console.log("X dist: " + x_dist + ", Y dist: " + y_dist);
-	
-	// Check how far away the guy is and if it's already moving.
-	// Bias x distance over y distance
-	d.moving = d.moving ? true : (Math.abs(x_dist) < AGRO_RANGE_X) && (Math.abs(y_dist) < AGRO_RANGE_Y);
-	if (!d.moving) return;
-	
-	let movement = 3 * ENEMY_SPEED * (level + 1);
-	let x_move = movement;
-	let y_move = movement;
-	
-	// Set movement to negative if needed.
-    if (x_dist > 0)
-		x_move = -1 * x_move;
-    if (y_dist > 0)
-		y_move = -1 * y_move;
-	
-	d.move(x_move, y_move);
+    let x_dist = d.pos.x - player.pos.x;
+    let y_dist = d.pos.y - (player.pos.y - 20);
+    console.log("X dist: " + x_dist + ", Y dist: " + y_dist);
+
+    // Check how far away the guy is and if it's already moving.
+    // Bias x distance over y distance
+    d.moving = d.moving
+      ? true
+      : Math.abs(x_dist) < AGRO_RANGE_X && Math.abs(y_dist) < AGRO_RANGE_Y;
+    if (!d.moving) return;
+
+    let movement = 3 * ENEMY_SPEED * (level + 1);
+    let x_move = movement;
+    let y_move = movement;
+
+    // Set movement to negative if needed.
+    if (x_dist > 0) x_move = -1 * x_move;
+    if (y_dist > 0) y_move = -1 * y_move;
+
+    d.move(x_move, y_move);
   });
-  
+
   // if player onCollide with anythig with dangerous
   // big mario becomes small
   // small mario dies
@@ -489,16 +490,16 @@ scene("game", ({ level, score }) => {
     // left we need to have minus direction
     player.move(-MOVE_SPEED, 0);
   });
-    
+
   onKeyDown("a", () => {
-      player.move(-MOVE_SPEED, 0);
+    player.move(-MOVE_SPEED, 0);
   });
 
   onKeyDown("right", () => {
     // right we need to have plus direction
     player.move(MOVE_SPEED, 0);
   });
-    
+
   onKeyDown("d", () => {
     player.move(MOVE_SPEED, 0);
   });
@@ -564,17 +565,27 @@ scene("game", ({ level, score }) => {
       go("lose", { score: scoreLabel.value });
     }
   });
-    
-  add([text("C - Controls"), pos (20, 54), scale(0.3), fixed()]);
-    
+
+  add([text("C - Controls"), pos(20, 54), scale(0.3), fixed()]);
+
   const controlsInfo = () => {
     add([text("Left - A or Left Arrow Key"), pos(20, 70), scale(0.3), fixed()]);
-    add([text("Right - D or Right Arrow Key"), pos(20, 86), scale(0.3), fixed()]);
+    add([
+      text("Right - D or Right Arrow Key"),
+      pos(20, 86),
+      scale(0.3),
+      fixed(),
+    ]);
     add([text("Jump - Space"), pos(20, 102), scale(0.3), fixed()]);
     add([text("Shoot - B"), pos(20, 118), scale(0.3), fixed()]);
-    add([text("Use Pipe - S or Down Arrow"), pos(20, 134), scale(0.3), fixed()]);
+    add([
+      text("Use Pipe - S or Down Arrow"),
+      pos(20, 134),
+      scale(0.3),
+      fixed(),
+    ]);
   };
-    
+
   onKeyPress("c", controlsInfo);
 
   // Bullet functionality
