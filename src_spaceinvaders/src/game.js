@@ -134,6 +134,13 @@ loadSprite("space_ship", "Wb1qfhK.png");
 // loadSound("Steamtech-Mayhem_Looping", "Steamtech-Mayhem_Looping.mp3");
 
 scene("game", ({ level, score }) => {
+  // Used to decrease the enemy count on destruction
+  let enemyCount = 0;
+  for (let i = 0; i < playableMap[level].length; i++) {
+    for (let j = 0; j < playableMap[level][i].length; j++) {
+      if (playableMap[level][i][j] === "^") enemyCount++;
+    }
+  }
   //create layers
   //An array
   // background layer, object layer as default, UI layer
@@ -259,6 +266,10 @@ scene("game", ({ level, score }) => {
     shake(4);
     destroy(b);
     destroy(s);
+    enemyCount--;
+    if (enemyCount === 0) {
+      go("vaccineInfoScene", { level: level + 1, score: score });
+    }
     scoreLabel.value++;
 
     // then display the score
@@ -326,6 +337,10 @@ scene("lose", ({ score }) => {
 
   // start the game
 
+  // onKeyPress("space", () => {
+  //   go("game", { level: 0, score: 0 });
+  // });
+
   wait(2, () => {
     go("menu");
   });
@@ -354,6 +369,14 @@ scene("vaccineInfoScene", ({ level, score }) => {
 
     //area(),
   ]),
+    // add([
+    //   text("Loading next Level..Please Wait..."),
+    //   scale(0.5),
+    //   color(200, 3, 10),
+
+    //   pos(100, window.innerHeight - 100),
+    // ]);
+
     add([
       text("Loading next Level..Please Wait..."),
       scale(0.5),

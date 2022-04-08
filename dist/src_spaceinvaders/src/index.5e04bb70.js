@@ -645,6 +645,11 @@ loadSprite("space_ship", "Wb1qfhK.png");
 // loadSound("explosion", "explosion.mp3");
 // loadSound("Steamtech-Mayhem_Looping", "Steamtech-Mayhem_Looping.mp3");
 scene("game", ({ level , score  })=>{
+    // Used to decrease the enemy count on destruction
+    let enemyCount = 0;
+    for(let i = 0; i < _playableMap.playableMap[level].length; i++){
+        for(let j = 0; j < _playableMap.playableMap[level][i].length; j++)if (_playableMap.playableMap[level][i][j] === "^") enemyCount++;
+    }
     //create layers
     //An array
     // background layer, object layer as default, UI layer
@@ -783,6 +788,11 @@ scene("game", ({ level , score  })=>{
         shake(4);
         destroy(b);
         destroy(s);
+        enemyCount--;
+        if (enemyCount === 0) go("vaccineInfoScene", {
+            level: level + 1,
+            score: score
+        });
         scoreLabel.value++;
         // then display the score
         scoreLabel.text = scoreLabel.value;
@@ -846,6 +856,9 @@ scene("lose", ({ score  })=>{
         pos(window.innerWidth / 3 - 300, window.innerHeight / 2 + 30), 
     ]);
     // start the game
+    // onKeyPress("space", () => {
+    //   go("game", { level: 0, score: 0 });
+    // });
     wait(2, ()=>{
         go("menu");
     });
@@ -870,7 +883,13 @@ scene("vaccineInfoScene", ({ level , score  })=>{
         scale(1),
         color(200, 144, 255),
         pos(20, 70), 
-    ]), add([
+    ]), // add([
+    //   text("Loading next Level..Please Wait..."),
+    //   scale(0.5),
+    //   color(200, 3, 10),
+    //   pos(100, window.innerHeight - 100),
+    // ]);
+    add([
         text("Loading next Level..Please Wait..."),
         scale(0.5),
         color(200, 3, 10),
@@ -4915,20 +4934,20 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "playableMap", ()=>playableMap
 );
 const playableMap = [
-    // [
-    //   "!   ^                    &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!       ^                &",
-    //   "!                        &",
-    //   "!                        &",
-    //   "!                        &",
-    // ],
+    [
+        "!   ^                    &",
+        "!                        &",
+        "!                        &",
+        "!                        &",
+        "!                        &",
+        "!                        &",
+        "!                        &",
+        "!                        &",
+        "!       ^                &",
+        "!                        &",
+        "!                        &",
+        "!                        &", 
+    ],
     [
         "!^^^           ^^^   ^^   ^&",
         "!  ^   ^^   ^^^    ^^^   ^^&",
