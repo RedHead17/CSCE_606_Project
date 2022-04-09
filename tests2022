@@ -1,8 +1,12 @@
 Controls:
 - Computer
-    1. Left and right arrows move the player in the corresponding direction. 
+    1. Holding Left and right arrows move the player in the corresponding direction. 
+    1a. Holding the A key moves the player left and holding the D key moves the player right
     2. Pressing space makes the player jump
     3. Pressing b makes the player perform an action (shoot projectile)
+    4. Pressing the down arrow or S while ontop of a pipe advances a player to the next level.
+    5. Pressing C reveals the controls in the top left of the screen.
+    
 - Mobile
     1. The left and right arrows on the left side of the screen move the player accordingly, and stop moving when the button is released. 
     2. Tapping the jump button on the far right side of the screen causes the player to jump.
@@ -38,3 +42,12 @@ Minibosses:
 Coin Collection:
 1. Player touches a coin
 2. Players score is incremented by 1
+
+Menu Scene:
+1. The game loads when the player selects the option to play game
+2. At the lose scene, once the game is over it should redirect to the menu page
+
+Info Scene:
+1. As the player advances to a new Level new info related to vaccine importance and hesitancy must be displayed
+2. The New information displayed should disappear after some time
+3. The Game should continue once the information scene disappears.

@@ -17,6 +17,7 @@ let buttonsVisible = true;
 
 let hasBulletAbility = false;
 
+
 const k = kaboom({
   global: true,
   // enable full screen
@@ -54,7 +55,7 @@ scene("menu", () => {
     //rect(260, 20),
     text("Play game"),
 
-    pos(window.innerWidth / 2 - 20, window.innerHeight / 2 - 40),
+    pos(window.innerWidth / 2 - 20, window.innerHeight / 2 - 80),
     color(10, 10, 155),
 
     origin("center"),
@@ -62,9 +63,10 @@ scene("menu", () => {
     {
       clickAction: () => {
         go("vaccineInfoScene", { level: 0, score: 0 });
-
-        //go("game", { level: 0, score: 0 });
-      },
+        },
+        touchAction: () => {
+            go("vaccineInfoScene", { level: 0, score: 0 });
+        },
     },
     scale(0.7),
     area(),
@@ -79,7 +81,8 @@ scene("menu", () => {
     pos(window.innerWidth / 2 - 20, window.innerHeight / 2),
     "button",
     {
-      clickAction: () => (window.location = "../../index.html"),
+      clickAction: () =>
+        window.location = "../../index.html",
     },
     scale(0.7),
     area(),
@@ -99,7 +102,84 @@ scene("menu", () => {
   });
 });
 
+scene("winner", ({ score }) => {
+    var x = 10,
+        y = 10,
+        z = 155;
+    color(240, 100, 24);
+    add(
+        [
+            text("Congratulations!"),
+            pos(window.innerWidth / 2 - 350, window.innerHeight / 2 - 200),
+            ,
+            scale(1),
+            color(10, 10, 155),
+            area(),
+            "title",
+        ],
+        origin("center")
+    );
+    add([text("Score: " + score, 32), origin("center"), pos(width() / 2 - 40, window.innerHeight / 2 - 100)]);
+    // Play game button
+    add([
+        //rect(260, 20),
+        text("Play Again"),
+
+        pos(window.innerWidth / 2 - 20, window.innerHeight / 2 - 40),
+        color(10, 10, 155),
+
+        origin("center"),
+        "button",
+        {
+            clickAction: () => {
+                go("vaccineInfoScene", { level: 0, score: 0 });
+
+                //go("game", { level: 0, score: 0 });
+            },
+        },
+        scale(0.7),
+        area(),
+
+        ,
+    ]);
+
+    add([
+        //rect(260, 20),
+        text("Back to Main Menu"),
+        color(10, 10, 155),
+        pos(window.innerWidth / 2 - 20, window.innerHeight / 2 + 40),
+        "button",
+        {
+            clickAction: () =>
+                window.location = "../../index.html",
+        },
+        scale(0.7),
+        area(),
+
+        origin("center"),
+    ]);
+
+    action("button", (b) => {
+        onHover("button", (b) => {
+            b.use(color(240, 100, 155));
+        });
+        b.use(color(10, 10, 155));
+    });
+
+    onClick("button", (b) => {
+        b.clickAction();
+    });
+});
+
 window.addEventListener("resize", resize, false);
+
+window.mobileAndTabletCheck = function() {
+  let check = false;
+  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  console.log("Check is " + check);
+  return check;
+};
+
 function resize() {
   // https://stackoverflow.com/questions/49716741/how-do-i-scale-the-scene-to-fullscreen
   var canvas = document.querySelector("canvas");
@@ -115,6 +195,8 @@ function resize() {
     canvas.style.height = windowHeight + "px";
   }
 }
+
+buttonsVisible = window.mobileAndTabletCheck();
 //add scenes
 //coins
 loadRoot("https://i.imgur.com/");
@@ -201,6 +283,7 @@ scene("game", ({ level, score }) => {
 
     // load in some sprites
     "=": () => [sprite("block"), solid(), area(), "brick"],
+    "_": () => [sprite("block"), solid(), area(), "block"],
     $: () => [sprite("coin"), "coin", area()],
     "%": () => [sprite("surprise"), solid(), "coin-surprise", area()],
     "*": () => [sprite("surprise"), solid(), "mushroom-surprise", area()],
@@ -223,15 +306,15 @@ scene("game", ({ level, score }) => {
     //Newly added Sprites end here
 
     "}": () => [sprite("unboxed"), solid(), area()],
-    "(": () => [sprite("pipe-bottom-left"), solid(), scale(0.5), area()],
+    "(": () => [sprite("pipe-bottom-left"), solid(), scale(0.5), "pipe", area()],
 
-    ")": () => [sprite("pipe-bottom-right"), solid(), scale(0.5), area()],
+    ")": () => [sprite("pipe-bottom-right"), solid(), scale(0.5), "pipe", area()],
 
     "-": () => [sprite("pipe-top-left"), solid(), scale(0.5), "pipe", area()],
 
     "+": () => [sprite("pipe-top-right"), solid(), scale(0.5), "pipe", area()],
 
-    "^": () => [sprite("covid"), "dangerous", area()],
+    "^": () => [sprite("covid"), scale(1), "dangerous", area()],
 
     "#": () => [sprite("mushroom"), solid(), "mushroom", body(), area()],
 
@@ -435,26 +518,49 @@ scene("game", ({ level, score }) => {
   });
 
   // Let us make evils move
+
+    onUpdate("dangerous1", (d) => {
+        if (d.enemyVelocity == null) { d.enemyVelocity = 3 * ENEMY_SPEED; }
+        d.onCollide("block", (d1) => {
+            console.log(d1.pos.x)
+            d.enemyVelocity *= -1;
+            let i = 1000000
+            while (i > -1) {
+                i--;
+            }
+        });
+        d.onCollide("pipe", (d1) => {
+            console.log(d1.pos.x)
+            d.enemyVelocity *= -1;
+            let i = 100000
+            while (i > -1) {
+                i--;
+            }
+        });
+
+        d.move(d.enemyVelocity, 0);
+  });
+
   onUpdate("dangerous", (d) => {
     let x_dist = d.pos.x - player.pos.x;
     let y_dist = d.pos.y - (player.pos.y - 20);
-    console.log("X dist: " + x_dist + ", Y dist: " + y_dist);
-
+    
     // Check how far away the guy is and if it's already moving.
     // Bias x distance over y distance
-    d.moving = d.moving
-      ? true
-      : Math.abs(x_dist) < AGRO_RANGE_X && Math.abs(y_dist) < AGRO_RANGE_Y;
+    d.moving = d.moving ? true : (Math.abs(x_dist) < AGRO_RANGE_X) && (Math.abs(y_dist) < AGRO_RANGE_Y);
     if (!d.moving) return;
 
-    let movement = 3 * ENEMY_SPEED * (level + 1);
+    let level_scaling = Math.min(level + 1, 4);
+    let movement = 3 * ENEMY_SPEED * level_scaling;
     let x_move = movement;
     let y_move = movement;
-
+    
     // Set movement to negative if needed.
-    if (x_dist > 0) x_move = -1 * x_move;
-    if (y_dist > 0) y_move = -1 * y_move;
-
+    if (x_dist > 0)
+        x_move = -1 * x_move;
+    if (y_dist > 0)
+        y_move = -1 * y_move;
+    
     d.move(x_move, y_move);
   });
 
@@ -462,15 +568,25 @@ scene("game", ({ level, score }) => {
   // big mario becomes small
   // small mario dies
   player.onCollide("dangerous", (d) => {
-    console.log(d.pos.y + " " + player.pos.y);
-    if (player.pos.y == d.pos.y || isJumping) {
-      console.log("detect");
-      destroy(d);
+    // console.log((d.pos.y) + " " + player.pos.y)
+    if ((player.pos.y == d.pos.y) || isJumping) {
+        // console.log("detect")
+        destroy(d);
     } else {
-      // go to a lose scene and display the final score
-      go("lose", { score: scoreLabel.value });
+    // go to a lose scene and display the final score
+    go("lose", { score: scoreLabel.value });
     }
   });
+  player.onCollide("dangerous1", (d) => {
+    // console.log((d.pos.y) + " " + player.pos.y)
+    if ((player.pos.y == d.pos.y) || isJumping) {
+        // console.log("detect")
+        destroy(d);
+    } else {
+    // go to a lose scene and display the final score
+    go("lose", { score: scoreLabel.value });
+    }
+});
 
   onUpdate(() => {
     // Make camera Position same as player position
@@ -515,12 +631,27 @@ scene("game", ({ level, score }) => {
   // or create a house and then use the key desired
   player.onCollide("pipe", () => {
     onKeyPress("down", () => {
-      /* Scene to display vaccine informations*/
-
-      go("vaccineInfoScene", { level: level + 1, score: score });
+        /* Scene to display vaccine informations*/
+        level = level + 1;
+        console.log("map count: " + playableMap.length);
+        if (playableMap.length > level) {
+            go("vaccineInfoScene", { level: level, score: score });
+        }
+        else {
+            level = 0;
+            go("winner", { score: scoreLabel.value });
+        }
     });
-    onKeyPress("s", () => {
-      go("game", { level: level + 1, score: scoreLabel.value });
+      onKeyPress("s", () => {
+          level = level + 1;
+          console.log("map count: " + playableMap.length);
+          if (playableMap.length > level) {
+              go("vaccineInfoScene", { level: level, score: score });
+          }
+          else {
+              level = 0;
+              go("winner", { score: scoreLabel.value });
+          }
     });
   });
 
@@ -629,11 +760,16 @@ scene("game", ({ level, score }) => {
     destroy(d);
     destroy(b);
   });
+  onCollide("dangerous1", "bullet", (d, b) => {
+    //shake(40);
+    destroy(d);
+    destroy(b);
+  });
 
   // The mobile version begins
   //The following is for the mobile support
   //##############MOBILE##################
-  if (isTouch()) {
+    if (isTouch()) {// && buttonsVisible) {
     //console.log(isTouch);
 
     //because left and right buttons will be pressed
@@ -787,7 +923,7 @@ scene("vaccineInfoScene", ({ level, score }) => {
     fixed(),
   ]);
   add([
-    text(info[level], {
+    text(info[level % info.length], {
       size: 35, // 48 pixels tall
       width: window.innerWidth,
       font: "apl386o",
