@@ -4836,8 +4836,6 @@ var _info = require("./info");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var AGRO_RANGE_X = 300;
 var AGRO_RANGE_Y = 75;
 var MOVE_SPEED = 150;
@@ -5157,7 +5155,7 @@ scene("game", function (_ref2) {
   function big() {
     var timer = 0; // let isBig = false;
 
-    return _defineProperty({
+    return {
       update: function update() {
         if (_isBig) {
           // change the jump force
@@ -5178,16 +5176,12 @@ scene("game", function (_ref2) {
         timer = 0;
         _isBig = false;
       },
-      biggify: function biggify(time) {
-        this.scale = vec2(2);
-        timer = time;
+      biggify: function biggify() {
+        this.scale = vec2(2); // timer = time;
+
         _isBig = true;
       }
-    }, "biggify", function biggify() {
-      this.scale = vec2(2); // timer = time;
-
-      _isBig = true;
-    });
+    };
   } // create mario
 
 
@@ -5592,8 +5586,8 @@ scene("game", function (_ref2) {
 
 }); // Lose scene
 
-scene("lose", function (_ref4) {
-  var score = _ref4.score;
+scene("lose", function (_ref3) {
+  var score = _ref3.score;
   add([text(score, 32), origin("center"), pos(width() / 2, height() / 2)]);
   add([text("Game Over."), color(200, 50, 10), scale(0.5), origin("center"), pos(width() / 2, height() / 2 - 120)]);
   add([text("Going Back to Main Menu"), color(200, 50, 10), scale(0.5), origin("center"), pos(width() / 2, height() / 2 - 80)]); // start the game
@@ -5606,9 +5600,9 @@ scene("lose", function (_ref4) {
 // At the end of each level, info is displayed
 // Uses array of info from info.js
 
-scene("vaccineInfoScene", function (_ref5) {
-  var level = _ref5.level,
-      score = _ref5.score;
+scene("vaccineInfoScene", function (_ref4) {
+  var level = _ref4.level,
+      score = _ref4.score;
   layers(["ui", "bg"], "bg");
   var infoColor = add([rect(window.innerWidth, window.innerHeight), color(10, 0, 10), layer("bg", "ui"), fixed()]);
   add([text(_info.info[level % _info.info.length], {
@@ -5661,7 +5655,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60983" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52891" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
