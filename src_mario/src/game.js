@@ -636,7 +636,9 @@ scene("game", ({ level, score }) => {
 
     // Check how far away the guy is and if it's already moving.
     // Bias x distance over y distance
-    d.moving = d.moving ? true : Math.abs(x_dist) < AGRO_RANGE_X && Math.abs(y_dist) < AGRO_RANGE_Y;
+    d.moving = d.moving
+      ? true
+      : Math.abs(x_dist) < AGRO_RANGE_X && Math.abs(y_dist) < AGRO_RANGE_Y;
     if (!d.moving) return;
 
     let level_scaling = Math.min(level + 1, 4);
@@ -730,15 +732,14 @@ scene("game", ({ level, score }) => {
   //then he has to go to Next Level
   // or create a house and then use the key desired
   player.onCollide("pipe", () => {
-	  level = level + 1;
-	  console.log("map count: " + playableMap.length);
-	  if (playableMap.length > level) {
-		  go("vaccineInfoScene", { level: level, score: score });
-	  }
-	  else {
-		  level = 0;
-		  go("winner", { score: scoreLabel.value });
-	  }
+    //level = level + 1;
+    console.log("map count: " + playableMap.length);
+    if (playableMap.length > level + 1) {
+      go("vaccineInfoScene", { level: level + 1, score: scoreLabel.value });
+    } else {
+      level = 0;
+      go("winner", { score: scoreLabel.value });
+    }
   });
 
   // we will define a function jump so that it can be reused both by touch and keyboard
@@ -779,7 +780,8 @@ scene("game", ({ level, score }) => {
 
   // Text on UI screen to display time
   add([text("Time Remaining: "), pos(20, 38), scale(0.3), fixed()]);
-  onUpdate(() => { (timer.time -= dt()), (timer.text = timer.time.toFixed(2));
+  onUpdate(() => {
+    (timer.time -= dt()), (timer.text = timer.time.toFixed(2));
 
     if (timer.time <= 0) {
       go("lose", { score: scoreLabel.value });
@@ -788,20 +790,50 @@ scene("game", ({ level, score }) => {
 
   // Controls to assist players
   add([text("C - Controls"), pos(20, 54), scale(0.3), fixed()]);
-  
-  const left_control = add([text("Left - A or Left Arrow Key"), pos(20, 70), scale(0.3), fixed(), opacity(CONTROL_OPACITY)]);
-  const right_control = add([text("Right - D or Right Arrow Key"), pos(20, 86), scale(0.3), fixed(), opacity(CONTROL_OPACITY)]);
-  const jump_control = add([text("Jump - Space"), pos(20, 102), scale(0.3), fixed(), opacity(CONTROL_OPACITY)]);
-  const jumpinfo_control = add([text("   *Jump on enemies to kill them"), pos(20, 118), scale(0.3), fixed(), opacity(CONTROL_OPACITY)]);
-  const shoot_control = add([text("Shoot - B"), pos(20, 136), scale(0.3), fixed(), opacity(CONTROL_OPACITY)]);
+
+  const left_control = add([
+    text("Left - A or Left Arrow Key"),
+    pos(20, 70),
+    scale(0.3),
+    fixed(),
+    opacity(CONTROL_OPACITY),
+  ]);
+  const right_control = add([
+    text("Right - D or Right Arrow Key"),
+    pos(20, 86),
+    scale(0.3),
+    fixed(),
+    opacity(CONTROL_OPACITY),
+  ]);
+  const jump_control = add([
+    text("Jump - Space"),
+    pos(20, 102),
+    scale(0.3),
+    fixed(),
+    opacity(CONTROL_OPACITY),
+  ]);
+  const jumpinfo_control = add([
+    text("   *Jump on enemies to kill them"),
+    pos(20, 118),
+    scale(0.3),
+    fixed(),
+    opacity(CONTROL_OPACITY),
+  ]);
+  const shoot_control = add([
+    text("Shoot - B"),
+    pos(20, 136),
+    scale(0.3),
+    fixed(),
+    opacity(CONTROL_OPACITY),
+  ]);
 
   const controlsInfo = () => {
-	  CONTROL_OPACITY = (CONTROL_OPACITY - 1)**2;
-	  left_control.opacity = CONTROL_OPACITY;
-	  right_control.opacity = CONTROL_OPACITY;
-	  jump_control.opacity = CONTROL_OPACITY;
-	  jumpinfo_control.opacity = CONTROL_OPACITY;
-	  shoot_control.opacity = CONTROL_OPACITY;
+    CONTROL_OPACITY = (CONTROL_OPACITY - 1) ** 2;
+    left_control.opacity = CONTROL_OPACITY;
+    right_control.opacity = CONTROL_OPACITY;
+    jump_control.opacity = CONTROL_OPACITY;
+    jumpinfo_control.opacity = CONTROL_OPACITY;
+    shoot_control.opacity = CONTROL_OPACITY;
   };
 
   onKeyPress("c", controlsInfo);
