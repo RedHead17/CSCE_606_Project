@@ -1,0 +1,12 @@
+First install npm and parcel
+In the command window:
+1) npm install -g parcel-bundler   (/* use command to get parcel bundler*/) 
+2) npm install kaboom
+3) npm run start 
+4) Go to localhost:1234
+
+remove "type='module'" from index.html if you get error "parcelRequired is not defined"
+pushing to heroku is done with "git push heroku main"
+
+Demo of game developed in Fall 2021: https://bhawn.github.io/CSCE_606_Project/index.html
+Demo of game developed in Sprint 2022: https://vaccine-hesitancy-game-606.herokuapp.com/
