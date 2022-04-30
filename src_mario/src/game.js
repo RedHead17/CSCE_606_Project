@@ -874,14 +874,15 @@ scene("game", ({ level, score }) => {
     }
   });
   onCollide("dangerous", "bullet", (d, b) => {
-    //shake(40);
     destroy(b);
     destroy(d);
   });
   onCollide("dangerous1", "bullet", (d, b) => {
-    //shake(40);
     destroy(b);
     destroy(d);
+  });
+  onCollide("brick", "bullet", (d, b) => {
+    destroy(b);
   });
 
   // The mobile version begins
